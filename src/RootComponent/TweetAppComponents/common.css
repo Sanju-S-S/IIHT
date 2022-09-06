@@ -1,0 +1,23 @@
+.navbar_wrapper{
+    padding: 12px;
+    display: flex;
+    justify-content: space-around;
+    margin: 5px;
+    background-color: aquamarine;
+}
+.navbar_wrapper a{
+    text-decoration: none;
+
+}
+
+.footer{
+    margin-top: 1rem;
+    padding: 7px;
+    background: #b9d9ec;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    color: black;
+}
