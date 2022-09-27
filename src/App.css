@@ -1,3 +1,17 @@
 .App {
   text-align: center;
 }
+
+label {
+  font-size: 1rem;
+}
+input.form-control, input.form-control:focus {
+  background: #1dd5ee;
+  width: 400px;
+}
+
+.error {
+  position: absolute;
+  color: red;
+  font-size: .8rem;
+} 

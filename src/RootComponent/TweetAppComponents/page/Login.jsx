@@ -1,26 +1,32 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../tweetAppService/authService";
+import { toast } from "react-toastify";
 import "./page.css";
 function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setErrors] = useState(false);
   const navigate = useNavigate();
 
-  function handleLogin(e) {
-    e.preventDefault();
+  function handleLogin() {
+    if (!username || !password) {
+      setErrors(true);
+      return;
+    }
     authService.login(username, password).then((res) => {
       console.log(res.data);
       if (res.data.status === "SUCCESS") {
-        alert("Login Successfull");
+        toast.success("Login Successfull", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
 
         localStorage.setItem("user", JSON.stringify(res.data));
         //localStorage.setItem("user", JSON.stringify(res.data.token));
-
         navigate("/tweet");
+        window.location.reload(false);
       } else {
-        alert("Login Failed " + res.data.msg);
+        toast.error("Login Failed " + res.data.msg);
       }
     });
   }
@@ -42,6 +48,9 @@ function Login() {
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
+        {error && !username && (
+          <div className="error_login">User Name is required</div>
+        )}
         <div>
           <label className="form__label" htmlFor="password">
             Password
@@ -56,7 +65,9 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
+        {error && !password && (
+          <div className="error_login">Password is required</div>
+        )}
         <br />
         <div className="button">
           <button className="btn btn-success" onClick={handleLogin}>

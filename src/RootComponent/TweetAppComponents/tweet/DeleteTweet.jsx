@@ -1,5 +1,6 @@
 import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import tweetService from "../../tweetAppService/tweet.service";
 const DeleteTweet = ({ tweet }) => {
   function handleDeleteTweet(username, tweetId) {
@@ -9,15 +10,15 @@ const DeleteTweet = ({ tweet }) => {
     });
   }
   return (
-    <a
-      type="submit"
-      href="#"
+    <Link
+      to="/profile"
       onClick={() => {
         handleDeleteTweet(tweet.username, tweet.tweetId);
       }}
     >
       <FaTrashAlt size={28} />
-    </a>
+    </Link>
   );
 };
+
 export default DeleteTweet;

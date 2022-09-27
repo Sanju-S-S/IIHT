@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import tweetService from "../../tweetAppService/tweet.service";
 import UserCard from "./UserCard";
 import NavBar from "../page/NavBar";
-import { Input } from "reactstrap";
 function GetAllUsers() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
@@ -25,7 +24,10 @@ function GetAllUsers() {
       <div>Users</div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card variant="outlined" style={{ width: "30rem" }}>
+        <Card
+          variant="outlined"
+          style={{ padding: "20px", marginTop: "1px", width: "350px" }}
+        >
           <Card.Subtitle color="blue">All Users</Card.Subtitle>
           <Card.Body>
             <div>

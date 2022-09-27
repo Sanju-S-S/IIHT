@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const TWEET_REST_API_URL = "http://localhost:8087/api/v1.0/tweets/";
+const TWEET_REST_API_URL =
+  "http://tweetappebs-env.eba-r9mskz9h.ap-northeast-1.elasticbeanstalk.com/api/v1.0/tweets/";
 const USER_TOKEN = JSON.parse(localStorage.getItem("user"));
 
 class tweetService {
@@ -73,11 +74,13 @@ class tweetService {
 
   updateTweet = (username, tweetId, tweet) => {
     return axios.put(
-      TWEET_REST_API_URL + username + "/update/" + tweetId,
+      TWEET_REST_API_URL + "tweet/update",
       { username, tweetId, tweet },
       {
-        headers: { "Content-Type": "application/json" },
-        Authorization: "Bearer " + USER_TOKEN.token,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + USER_TOKEN.token,
+        },
       }
     );
   };
@@ -98,10 +101,30 @@ class tweetService {
     );
   }
 
-  replyTweet(username, tweetId, postdata) {
+  unlikeTweet(username, tweetId) {
+    return axios.put(
+      TWEET_REST_API_URL + username + "/unlike/" + tweetId,
+      {
+        username,
+        tweetId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + USER_TOKEN.token,
+        },
+      }
+    );
+  }
+
+  replyTweet(username, tweetId, tweetReply) {
     return axios.post(
       TWEET_REST_API_URL + username + "/reply/" + tweetId,
-      postdata,
+      {
+        username,
+        tweetId,
+        tweetReply,
+      },
       {
         headers: {
           "Content-Type": "application/json",

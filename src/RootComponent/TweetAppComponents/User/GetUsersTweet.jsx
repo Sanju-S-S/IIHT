@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import { Input, Label } from "reactstrap";
+import { Form, FormGroup, input, label, Row } from "reactstrap";
 import tweetService from "../../tweetAppService/tweet.service";
 import TweetCard from "../tweet/TweetCard";
+import NavBar from "../page/NavBar";
 import "../common.css";
 function GetUsersTweet() {
   const [tweets, setTweets] = useState([]);
@@ -26,51 +27,52 @@ function GetUsersTweet() {
 
   return (
     <>
-      <div className="user-detail">
-        {/* <div>
-          <Label htmlFor="FirstName">FirstName</Label>
-          <Input
-            id="FirstName"
-            title="FirstName"
-            required={false}
-            name="name"
-            value={users.firstName}
-            disabled
-          />
-        </div> */}
-        <div>
-          Username
-          <Input
+      <div>
+        <NavBar />
+      </div>
+      <div style={{ justifyContent: "center" }}>
+        <div className="profile">
+          <label htmlFor="username" className="label">
+            Username
+          </label>
+          <input
+            className="input"
+            id="username"
             title="Username"
-            required={false}
             name="username"
-            value={users.username}
+            defaultValue={users.username}
             disabled
           />
         </div>
-        <div className="">
-          EmailId
-          <Input
+        <div className="profile">
+          <label htmlFor="email" className="label">
+            EmailID
+          </label>
+          <input
+            className="input"
+            id="email"
             title="EmailId"
-            required={false}
             name="email"
-            value={users.emailId}
+            defaultValue={users.emailId}
             disabled
           />
         </div>
-        <div>
-          PhoneNumber
-          <Input
+        <div className="profile">
+          <label htmlFor="phone" className="label">
+            PhoneNumber
+          </label>
+          <input
+            className="input"
+            id="PhoneNumber"
             title="Phone"
-            required={false}
             name="phone"
-            value={users.contactNumber}
+            defaultValue={users.contactNumber}
             disabled
           />
         </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <Card variant="outlined" style={{ width: "20rem", padding: "5px" }}>
+        <Card variant="outlined" style={{ width: "500px", padding: "20px" }}>
           <Card.Title color="blue">
             All Tweets of{" "}
             {JSON.parse(localStorage.getItem("user")).user.username}

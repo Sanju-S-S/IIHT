@@ -20,7 +20,6 @@ const UpdateTweet = ({ tweet }) => {
   const tweetMsgRef = useRef(null);
   const toggle = () => setModal(!modal);
   const [remaining, setRemaining] = useState(144);
-
   useEffect(() => {
     setRemaining(144 - tweetMsg.length);
   }, [tweetMsg]);
@@ -30,6 +29,7 @@ const UpdateTweet = ({ tweet }) => {
       .updateTweet(tweet.username, tweet.tweetId, tweetMsg)
       .then((res) => {
         console.log(res.data);
+        window.location.reload(false);
       });
   };
 
@@ -42,10 +42,9 @@ const UpdateTweet = ({ tweet }) => {
           <Form>
             <FormGroup>
               <Label for="tweet">Update your tweet</Label>
-              <Input
+              <textarea
                 id="tweet"
                 name="text"
-                type="textarea"
                 ref={tweetMsgRef}
                 value={tweetMsg}
                 maxLength="144"

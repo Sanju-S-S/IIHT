@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import Footer from "./Footer";
-import Header from "./Header";
-import "./home.css";
 import Login from "./Login";
 import Register from "./Register";
 function Home() {
@@ -13,17 +9,8 @@ function Home() {
   };
   return (
     <div>
-      <Header />
       <div>
         <div>
-          <button
-            type="button"
-            className={`btn ${isSignup ? "btn-primary" : ""}`}
-            onClick={toggleForm}
-            disabled={isSignup}
-          >
-            Register
-          </button>
           <button
             type="button"
             className={`btn ${!isSignup ? "btn-primary" : ""}`}
@@ -35,10 +22,18 @@ function Home() {
           >
             Login
           </button>
+          <button
+            type="button"
+            className={`btn ${isSignup ? "btn-primary" : ""}`}
+            onClick={toggleForm}
+            disabled={isSignup}
+          >
+            Register
+          </button>
         </div>
         <div className="w-full mt-4">
-          {isSignup && <Register />}
           {!isSignup && <Login />}
+          {isSignup && <Register />}
         </div>
         {/* <NavLink to="/">Login</NavLink>
       <NavLink to="/"> Register</NavLink> */}

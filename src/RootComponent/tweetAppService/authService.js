@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8087/api/v1.0/tweets/";
+const API_URL =
+  "http://tweetappebs-env.eba-r9mskz9h.ap-northeast-1.elasticbeanstalk.com/api/v1.0/tweets/";
 class AuthService {
   login(username, password) {
     return axios.post(API_URL + "login", {
@@ -33,6 +34,11 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+  }
+  currentUser() {
+    let data = JSON.parse(localStorage.getItem("user"));
+    console.log(data.user.username);
+    return data.user.username;
   }
   forgot(username, newPassword, confirmPassword) {
     return axios.put(API_URL + username + "/forgot", {

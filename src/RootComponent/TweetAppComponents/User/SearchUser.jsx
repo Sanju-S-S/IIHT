@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Card } from "reactstrap";
 import tweetService from "../../tweetAppService/tweet.service";
 import UserCard from "./UserCard";
+import NavBar from "../page/NavBar";
+import "../common.css";
 function SearchUser() {
   const [searchUser, setSearchUser] = useState("");
   const [users, setUsers] = useState([]);
@@ -21,10 +24,14 @@ function SearchUser() {
   return (
     <div>
       <div>
-        <span>Search Users </span>
+        <NavBar />
+      </div>
+      <div>
+        <span>Search Users by username </span>
         <Link to="/tweet">Home</Link>
       </div>
-      <div className="input-group">
+      <br />
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <div className="form-outline">
           <input
             type="text"
@@ -39,15 +46,22 @@ function SearchUser() {
           <label className="form-label" htmlFor="search">
             Search
           </label>
+          {/* <button type="button" className="btn btn-primary">
+            <i className="fas fa-search"></i>
+          </button> */}
         </div>
-        {/* <button type="button" class="btn btn-primary">
-          <i class="fas fa-search"></i>
-        </button> */}
       </div>
 
-      <div className="pb-8">
-        {users.length > 0 &&
-          users.map((user) => <UserCard user={user} key={user.id} />)}
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Card style={{ padding: "20px", marginTop: "1px", width: "350px" }}>
+          {users.length > 0 ? (
+            <div>Users containing {searchUser}</div>
+          ) : (
+            <div>There are no user containing {searchUser}</div>
+          )}
+          {users.length > 0 &&
+            users.map((user) => <UserCard user={user} key={user.id} />)}
+        </Card>
       </div>
     </div>
   );

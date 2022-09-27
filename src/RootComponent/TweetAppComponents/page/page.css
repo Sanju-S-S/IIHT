@@ -21,6 +21,15 @@ body{
     /* height: 600px; */
 }
 
+.register_form{
+        background-color: white;
+        border-radius: 7px;
+        width: 475px;
+        margin: 20px auto;
+        padding: 15px;
+        /* height: 600px; */
+    }
+
 .form-body{
     text-align: left;
     padding: 20px 10px;
@@ -32,6 +41,8 @@ body{
 
 .form__label{
     width: 40%;
+    margin-top: -20px;
+    margin-left: 12px;
 }
 
 .form_input{
@@ -103,3 +114,36 @@ body{
     
     padding-left:75px;
 }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    }
+  
+  label {
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: -17px;
+    margin-left: 12px;
+  }
+  
+  input.form-control, input.form-control:focus {
+    background-color: white;
+    border-radius: 7px;
+    margin: 20px auto;
+    padding: 9px;
+    background: #cdf8fd;
+    width: 400px;
+  }
+  
+  .error {
+    position: relative;
+    color: red;
+    font-size: .8rem;
+    margin-left: 210px;
+  }
+  .error_login {
+    position: relative;
+    color: red;
+    font-size: .8rem;
+    margin-left: 169px;
+  }

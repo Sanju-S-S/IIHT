@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { NavItem } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import authService from "../../tweetAppService/authService";
 import "./page.css";
 function Register() {
@@ -12,14 +12,22 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  //const [users, setUsers] = useState([]);
+  const [error, setErrors] = useState(false);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (localStorage.getItem("user")) {
-  //     navigate("/");
-  //   }
-  // }, []);
   function handleRegister() {
+    if (
+      !loginId ||
+      !firstName ||
+      !lastName ||
+      !emailId ||
+      !username ||
+      !password ||
+      !confirmPassword ||
+      !contactNumber
+    ) {
+      setErrors(true);
+      return;
+    }
     authService
       .register(
         loginId,
@@ -34,9 +42,12 @@ function Register() {
       .then((res) => {
         console.log("test", res.data);
         //setUsers(res.data);
+
         if (res.data) {
-          // localStorage.setItem("user", JSON.stringify(res.data));
+          toast.success("Register Successful");
           navigate("/");
+        } else {
+          toast.warning(res.data.msg);
         }
       });
   }
@@ -68,20 +79,6 @@ function Register() {
             <b>Register Page</b>
           </h1>
         </div>
-        <div className="loginId">
-          <label className="form__label" htmlFor="loginId">
-            Login Id
-          </label>
-          <input
-            className="form__input"
-            type="text"
-            id="loginId"
-            required
-            value={loginId}
-            onChange={(e) => handleInputChange(e)}
-            placeholder="Login Id"
-          />
-        </div>
         <div className="username">
           <label className="form__label" htmlFor="firstName">
             First Name
@@ -96,6 +93,10 @@ function Register() {
             placeholder="FirstName"
           />
         </div>
+        {error && !firstName && (
+          <div className="error">First Name is required</div>
+        )}
+
         <div className="lastname">
           <label className="form__label" htmlFor="lastName">
             Last Name
@@ -111,6 +112,9 @@ function Register() {
             placeholder="LastName"
           />
         </div>
+        {error && !lastName && (
+          <div className="error">Last Name is required</div>
+        )}
         <div className="email">
           <label className="form__label" htmlFor="email">
             Email
@@ -125,6 +129,24 @@ function Register() {
             placeholder="Email"
           />
         </div>
+        {error && !emailId && <div className="error">EmaillId is required</div>}
+
+        <div className="loginId">
+          <label className="form__label" htmlFor="loginId">
+            Login Id
+          </label>
+          <input
+            className="form__input"
+            type="text"
+            id="loginId"
+            required
+            value={loginId}
+            onChange={(e) => handleInputChange(e)}
+            placeholder="Login Id"
+          />
+        </div>
+        {error && !loginId && <div className="error">Login Id is required</div>}
+
         <div className="username">
           <label className="form__label" htmlFor="username">
             Username
@@ -139,6 +161,9 @@ function Register() {
             placeholder="Username"
           />
         </div>
+        {error && !username && (
+          <div className="error">User Name is required</div>
+        )}
         <div className="password">
           <label className="form__label" htmlFor="password">
             Password
@@ -153,6 +178,9 @@ function Register() {
             placeholder="Password"
           />
         </div>
+        {error && !password && (
+          <div className="error">Password is required</div>
+        )}
         <div className="confirm-password">
           <label className="form__label" htmlFor="confirmPassword">
             Confirm Password
@@ -167,6 +195,9 @@ function Register() {
             placeholder="Confirm Password"
           />
         </div>
+        {error && !confirmPassword && (
+          <div className="error">Confirm password is required</div>
+        )}
         <div className="contact-number">
           <label className="form__label" htmlFor="contactNumber">
             Contact Number
@@ -177,26 +208,30 @@ function Register() {
             id="contactNumber"
             required
             value={contactNumber}
+            maxLength={10}
             onChange={(e) => handleInputChange(e)}
             placeholder="Contact Number"
           />
         </div>
+        {error && !contactNumber && (
+          <div className="error">Contact Number is required</div>
+        )}
       </div>
       <div>
         <button
           type="submit"
           id="submit"
           onClick={handleRegister}
-          className="btn btn-primary"
+          className="btn btn-success"
         >
-          Register
+          Register User
         </button>
       </div>
 
-      <NavItem>
+      {/* <NavItem>
         Already have an account?
-        <NavLink to="/">Login</NavLink>
-      </NavItem>
+        <NavLink to="/signup">Login</NavLink>
+      </NavItem> */}
     </div>
   );
 }
