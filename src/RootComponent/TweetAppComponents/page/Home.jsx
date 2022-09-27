@@ -14,8 +14,8 @@ function Home() {
   return (
     <div>
       <Header />
-      <div className="h-full w-full md:w-1/2">
-        <div className="flex  rounded-full text-secondary-2 border-2 border-gray-100 p-1 font-semibold tracking-wider">
+      <div>
+        <div>
           <button
             type="button"
             className={`btn ${isSignup ? "btn-primary" : ""}`}

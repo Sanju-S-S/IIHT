@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-
-//import react pro sidebar components
 import {
   ProSidebar,
   Menu,
@@ -9,8 +7,6 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-
-//import icons from react icons
 import { FaList, FaRegHeart } from "react-icons/fa";
 import {
   FiHome,
@@ -18,14 +14,14 @@ import {
   FiArrowLeftCircle,
   FiArrowRightCircle,
 } from "react-icons/fi";
-import { RiPencilLine } from "react-icons/ri";
+//import { RiPencilLine } from "react-icons/ri";
 import { BiCog } from "react-icons/bi";
-
-//import sidebar css from react-pro-sidebar module and our custom css
 import "react-pro-sidebar/dist/css/styles.css";
 import "./header.css";
-import Logout from "./Logout";
-import { useNavigate } from "react-router-dom";
+//import Logout from "./Logout";
+import { useNavigate, Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+//import GetAllUsers from "../User/GetAllUsers";
 
 const Header = () => {
   //create initial menuCollapse state using useState hook
@@ -39,16 +35,18 @@ const Header = () => {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    toast("Logging out!");
+
     navigate("/");
   };
   return (
     <>
+      <Toaster />
       <div id="header">
-        {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
             <div className="logotext">
-              {/* small and big change using menucollapse state */}
               <p>{menuCollapse ? "Tweet" : "Tweet App"}</p>
             </div>
             <div className="closemenu" onClick={menuIconClick}>
@@ -58,17 +56,24 @@ const Header = () => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-              <MenuItem active={true} icon={<FiHome />}>
-                Home
+              <MenuItem icon={<FiHome />}>Home</MenuItem>
+              <MenuItem icon={<FaList />}>
+                <Link to="/profile">Profile</Link>
               </MenuItem>
-              <MenuItem icon={<FaList />}>Category</MenuItem>
-              <MenuItem icon={<BiCog />}>Profile</MenuItem>
+
+              <MenuItem icon={<FaList />}>
+                <Link to="/users">See Users</Link>
+              </MenuItem>
+
+              <MenuItem icon={<BiCog />}>
+                <Link to="/search/users"> Search User</Link>
+              </MenuItem>
             </Menu>
           </SidebarContent>
           <SidebarFooter>
             <Menu iconShape="square">
               <MenuItem icon={<FiLogOut />} onClick={logout}>
-                <Logout />
+                Logout
               </MenuItem>
             </Menu>
           </SidebarFooter>

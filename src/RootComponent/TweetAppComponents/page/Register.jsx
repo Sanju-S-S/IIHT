@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavItem } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import authService from "../../tweetAppService/authService";
@@ -12,15 +12,15 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [users, setUsers] = useState([]);
+  //const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   // useEffect(() => {
-  //   if (localStorage.getItem("user-info")) {
+  //   if (localStorage.getItem("user")) {
   //     navigate("/");
   //   }
   // }, []);
   function handleRegister() {
-    const user = authService
+    authService
       .register(
         loginId,
         firstName,
@@ -33,10 +33,10 @@ function Register() {
       )
       .then((res) => {
         console.log("test", res.data);
-        setUsers(res.data);
+        //setUsers(res.data);
         if (res.data) {
-          localStorage.setItem("user-info", JSON.stringify(res.data));
-          navigate("/tweet");
+          // localStorage.setItem("user", JSON.stringify(res.data));
+          navigate("/");
         }
       });
   }
@@ -195,7 +195,7 @@ function Register() {
 
       <NavItem>
         Already have an account?
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/">Login</NavLink>
       </NavItem>
     </div>
   );

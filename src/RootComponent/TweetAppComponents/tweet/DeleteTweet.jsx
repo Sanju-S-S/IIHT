@@ -2,24 +2,22 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import tweetService from "../../tweetAppService/tweet.service";
 const DeleteTweet = ({ tweet }) => {
-  function handleDeleteTweet(e) {
-    console.log(e);
-    tweetService.deleteTweet(tweet.username, tweet.tweetId).then((res) => {
+  function handleDeleteTweet(username, tweetId) {
+    tweetService.deleteTweet(username, tweetId).then((res) => {
       console.log(res.data);
-      console.log(e.target.data);
+      window.location.reload(false);
     });
   }
   return (
-    <div>
-      Delete Tweet
-      <a
-        onClick={(e) => {
-          handleDeleteTweet();
-        }}
-      >
-        <FaTrashAlt />
-      </a>
-    </div>
+    <a
+      type="submit"
+      href="#"
+      onClick={() => {
+        handleDeleteTweet(tweet.username, tweet.tweetId);
+      }}
+    >
+      <FaTrashAlt size={28} />
+    </a>
   );
 };
 export default DeleteTweet;

@@ -1,63 +1,122 @@
 import axios from "axios";
 
 const TWEET_REST_API_URL = "http://localhost:8087/api/v1.0/tweets/";
+const USER_TOKEN = JSON.parse(localStorage.getItem("user"));
+
 class tweetService {
   getAllTweets() {
-    return axios.get(TWEET_REST_API_URL + "all");
+    return axios.get(TWEET_REST_API_URL + "all", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
+    });
   }
   getAllUsers() {
-    return axios.get(TWEET_REST_API_URL + "users/all");
+    return axios.get(TWEET_REST_API_URL + "users/all", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
+    });
   }
   getUserByUsername(username) {
-    return axios.get(TWEET_REST_API_URL + "user/search/" + username);
+    return axios.get(TWEET_REST_API_URL + "user/search/" + username, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
+    });
+  }
+  getUserByUserName(username) {
+    return axios.get(TWEET_REST_API_URL + "user/" + username, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
+    });
   }
   getTweetByTweetId(tweetId) {
-    return axios.get(TWEET_REST_API_URL + "tweet/" + tweetId);
-  }
-
-  getAllTweetOfUsername(username) {
-    return axios.get(TWEET_REST_API_URL + username);
-  }
-
-  postTweet(username, tweet, tweetTag) {
-    return axios.post(TWEET_REST_API_URL + username + "/add", {
-      username,
-      tweet,
-      tweetTag,
+    return axios.get(TWEET_REST_API_URL + "tweet/" + tweetId, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
     });
   }
 
-  updateTweet = (userId, tweetId, postdata) => {
+  getAllTweetOfUsername(username) {
+    return axios.get(TWEET_REST_API_URL + username, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
+    });
+  }
+
+  postTweet(username, tweet, tweetTag) {
+    return axios.post(
+      TWEET_REST_API_URL + username + "/add",
+      {
+        username,
+        tweet,
+        tweetTag,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + USER_TOKEN.token,
+        },
+      }
+    );
+  }
+
+  updateTweet = (username, tweetId, tweet) => {
     return axios.put(
-      TWEET_REST_API_URL + userId + "/update/" + tweetId,
-      postdata
-      // {
-      //   headers: { "Content-Type": "application/json" },
-      // }
+      TWEET_REST_API_URL + username + "/update/" + tweetId,
+      { username, tweetId, tweet },
+      {
+        headers: { "Content-Type": "application/json" },
+        Authorization: "Bearer " + USER_TOKEN.token,
+      }
     );
   };
 
   likeTweet(username, tweetId) {
-    return axios.put(TWEET_REST_API_URL + username + "/like/" + tweetId, {
-      username,
-      tweetId,
-    });
+    return axios.put(
+      TWEET_REST_API_URL + username + "/like/" + tweetId,
+      {
+        username,
+        tweetId,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + USER_TOKEN.token,
+        },
+      }
+    );
   }
 
   replyTweet(username, tweetId, postdata) {
     return axios.post(
       TWEET_REST_API_URL + username + "/reply/" + tweetId,
-      postdata
-      // {
-      //   headers: { "Content-Type": "application/json" },
-      // }
+      postdata,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + USER_TOKEN.token,
+        },
+      }
     );
   }
 
   deleteTweet(username, tweetId) {
     return axios.delete(TWEET_REST_API_URL + username + "/delete/" + tweetId, {
-      username,
-      tweetId,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + USER_TOKEN.token,
+      },
     });
   }
 }

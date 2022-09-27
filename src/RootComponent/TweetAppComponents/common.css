@@ -21,3 +21,12 @@
     text-align: left;
     color: black;
 }
+
+.user-detail{
+    box-sizing: border-box;
+    float: center;
+    border-radius: 8px;
+    margin-left: 20px;
+    width: 300px;
+    height: 200px;
+}

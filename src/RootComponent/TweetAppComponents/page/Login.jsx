@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import toast from "react-hot-toast";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../tweetAppService/authService";
 import "./page.css";
@@ -7,16 +7,20 @@ function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
   function handleLogin(e) {
     e.preventDefault();
     authService.login(username, password).then((res) => {
       console.log(res.data);
       if (res.data.status === "SUCCESS") {
-        toast.success("Login Successfull");
-        localStorage.setItem("user", JSON.stringify(res.data.user));
+        alert("Login Successfull");
+
+        localStorage.setItem("user", JSON.stringify(res.data));
+        //localStorage.setItem("user", JSON.stringify(res.data.token));
+
         navigate("/tweet");
       } else {
-        toast.error("Login Failed");
+        alert("Login Failed " + res.data.msg);
       }
     });
   }

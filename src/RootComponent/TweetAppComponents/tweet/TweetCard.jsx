@@ -3,66 +3,60 @@ import { Card } from "react-bootstrap";
 import avatar from "../../../avatar.png";
 import { FcLike, FcComments } from "react-icons/fc";
 import DeleteTweet from "./DeleteTweet";
+import UpdateTweet from "./UpdateTweet";
 import tweetService from "../../tweetAppService/tweet.service";
-const TweetCard = ({ tweets }) => {
-  function replyComments() {
-    tweetService.replyTweet(tweets.username, tweets.tweetId).then((res) => {
+import { useEffect } from "react";
+const TweetCard = ({ tweet, userProfile }) => {
+  const replyComments = (username, tweetId) => {};
+  const handleLikeTweet = (event) => {
+    event.preventDefault();
+    tweetService.likeTweet(tweet.username, tweet.tweetId).then((res) => {
       console.log(res.data);
+      window.location.reload(false);
     });
-  }
-  function handleLikeTweet(event, username, like) {
-    tweetService.likeTweet(username, like).then((res) => {
-      console.log(res.data);
-      console.log(event.target.data);
-    });
-  }
+  };
   return (
     <div>
-      {tweets.length > 0 && (
-        <ul>
-          {tweets.map((tweet) => (
-            <Card>
-              <div key={tweet.tweetId}>
-                <div>
-                  <img
-                    src={avatar}
-                    width="50"
-                    height="50"
-                    alt="Profile avatar"
-                  />
-                  <span>{tweet.username}</span>
-                </div>
-                <div>
-                  <span>{tweet.tweet}</span>
-                </div>
-                <div>
-                  <span>
-                    <FcComments />
-                  </span>
-                  <a href="#" onClick={replyComments}>
-                    Comments
-                  </a>
-                  <span>{tweet.reply}</span>
+      <Card style={{ padding: "20px", marginTop: "10px" }}>
+        <div key={tweet.tweetId}>
+          <div>
+            <img src={avatar} width="50" height="50" alt="Profile avatar" />
+            <span> {tweet.username} </span>
+            <span>{userProfile && <UpdateTweet tweet={tweet} />}</span>
+          </div>
+          <div>
+            <span>{tweet.tweet}</span>
+          </div>
+          <div>
+            <span>{tweet.tweetTag}</span>
+          </div>
+          <div>
+            <a
+              href="#"
+              onClick={() => replyComments(tweet.username, tweet.tweetId)}
+            >
+              <span>
+                <FcComments size={28} />
+              </span>
+            </a>
+            <span>{tweet.reply}</span>
 
-                  <a
-                    type="submit"
-                    href="#"
-                    onClick={(event) =>
-                      handleLikeTweet(event, tweet.username, tweet.tweetId)
-                    }
-                  >
-                    <FcLike />
-                  </a>
-                  {tweet.like}
-                </div>
-              </div>
-              <div style={{ float: "left" }}>
-                <DeleteTweet tweet={tweet} />
-              </div>
-            </Card>
-          ))}
-        </ul>
-      )}
+            <a
+              type="submit"
+              href="#"
+              onClick={(event) => {
+                handleLikeTweet(event);
+              }}
+            >
+              <FcLike size={28} />
+            </a>
+            {tweet.like}
+
+            {userProfile && <DeleteTweet tweet={tweet} />}
+          </div>
+        </div>
+        <div style={{ float: "left" }}></div>
+      </Card>
     </div>
   );
 };
